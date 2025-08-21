@@ -9,7 +9,7 @@ interface CartItem {
 }
 
 interface CartProps {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 export default function Cart({ onClose }: CartProps) {
@@ -23,20 +23,21 @@ export default function Cart({ onClose }: CartProps) {
 
   function fetchCart() {
     api.get("/cart").then(res => {
-      setCart(res.data);
+      setCart(res.data as Record<string, CartItem>);
       setLoading(false);
     });
   }
 
   function handleQuantityChange(productId: string, quantity: number) {
     api.patch(`/cart/${productId}`, { quantity }).then(res => {
-      setCart(res.data.cart);
+      setCart((res.data as { cart: Record<string, CartItem> }).cart);
     });
   }
 
   function handleRemove(productId: string) {
     api.delete(`/cart/${productId}`).then(res => {
-      setCart(res.data.cart);
+      const data = res.data as { cart: Record<string, CartItem> };
+      setCart(data.cart);
     });
   }
 
@@ -46,6 +47,14 @@ export default function Cart({ onClose }: CartProps) {
       setSuccess(true);
     });
   }
+
+  const handleGoBack = () => {
+    if (onClose) {
+      onClose();
+    } else {
+      window.location.href = "/";
+    }
+  };
 
   const subtotal = Object.values(cart).reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -58,7 +67,7 @@ export default function Cart({ onClose }: CartProps) {
       <div className="p-4 text-center">
         <h2 className="text-xl font-bold mb-2">Pedido finalizado!</h2>
         <p className="mb-4">Obrigado pela compra.</p>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={onClose}>
+        <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleGoBack}>
           Voltar
         </button>
       </div>
@@ -67,14 +76,14 @@ export default function Cart({ onClose }: CartProps) {
     return (
       <div className="p-4 text-center">
         <p>Carrinho vazio.</p>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={onClose}>
+        <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleGoBack}>
           Voltar
         </button>
       </div>
     );
 
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-md mx-auto bg-white rounded shadow">
       <h2 className="text-xl font-bold mb-2">Carrinho de Compras</h2>
       <ul>
         {Object.entries(cart).map(([productId, item]) => (
@@ -110,7 +119,7 @@ export default function Cart({ onClose }: CartProps) {
       </button>
       <button
         className="mt-2 bg-gray-300 text-gray-700 px-4 py-2 rounded"
-        onClick={onClose}
+        onClick={handleGoBack}
       >
         Voltar
       </button>

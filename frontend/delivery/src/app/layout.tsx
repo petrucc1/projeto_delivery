@@ -4,9 +4,11 @@ import "./globals.css";
 
 const geistSans = Geist({
   subsets: ["latin"],
+  display: "swap",
 });
 const geistMono = Geist_Mono({
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -20,8 +22,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`antialiased ${geistSans.className} ${geistMono.className}`}>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`antialiased ${geistSans.className} ${geistMono.className}`}
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>

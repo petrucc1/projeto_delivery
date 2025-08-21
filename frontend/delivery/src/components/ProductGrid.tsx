@@ -12,6 +12,7 @@ interface Product {
 interface ProductGridProps {
   products: Product[];
   onAddToCart: (product: Product) => void;
+  adding: number | null;
 }
 
 export default function ProductGrid({ products, onAddToCart }: ProductGridProps) {
