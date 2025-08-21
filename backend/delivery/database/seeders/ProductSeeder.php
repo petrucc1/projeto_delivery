@@ -17,19 +17,19 @@ class ProductSeeder extends Seeder
                 'name' => 'Pizza Margherita',
                 'description' => 'Clássica pizza italiana com molho de tomate e queijo.',
                 'price' => 35.50,
-                'image_url' => 'https://example.com/images/pizza_margherita.jpg',
+                'image_url' => 'https://img.cdndsgni.com/preview/12118796-m.jpg',
             ],
             [
                 'name' => 'Hambúrguer Especial',
                 'description' => 'Hambúrguer artesanal com queijo, bacon e molho especial.',
                 'price' => 28.00,
-                'image_url' => 'https://example.com/images/hamburguer_especial.jpg',
+                'image_url' => 'https://img.cdndsgni.com/preview/13009358.jpg',
             ],
             [
                 'name' => 'Suco Natural de Laranja',
                 'description' => 'Suco 100% natural, sem adição de açúcar.',
                 'price' => 8.50,
-                'image_url' => 'https://example.com/images/suco_laranja.jpg',
+                'image_url' => 'https://img.cdndsgni.com/preview/10136074.jpg',
             ],
         ];
 
