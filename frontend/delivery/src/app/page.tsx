@@ -23,7 +23,8 @@ export default function HomePage() {
       try {
         const res = await api.get("/products");
         const data = res.data as { products: Product[] };
-        setProducts(data.products.map((p: Product) => ({
+        const products = Array.isArray(data.products) ? data.products : [];
+        setProducts(products.map((p: Product) => ({
           ...p,
           price: Number(p.price),
         })));

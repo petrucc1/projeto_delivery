@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import Cart from "@/components/Cart";
 
 export default function CartPage() {
