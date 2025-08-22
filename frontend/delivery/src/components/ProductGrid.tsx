@@ -32,13 +32,32 @@ export default function ProductGrid({
 
   return (
     <div
-      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-        gap: "1.5rem",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gap: "24px",
+        width: "100%",
       }}
+      className="responsive-grid"
     >
+      <style jsx>{`
+        @media (max-width: 1024px) {
+          .responsive-grid {
+            grid-template-columns: repeat(3, 1fr) !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .responsive-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .responsive-grid {
+            grid-template-columns: repeat(1, 1fr) !important;
+          }
+        }
+      `}</style>
+
       {products.map((product) => (
         <div
           key={product.id}
@@ -65,7 +84,6 @@ export default function ProductGrid({
             e.currentTarget.style.transform = "translateY(0px)";
           }}
         >
-          {/* Imagem do produto */}
           <div
             className="h-48 bg-gray-100 overflow-hidden flex-shrink-0"
             style={{
@@ -87,7 +105,6 @@ export default function ProductGrid({
                   transition: "transform 0.4s ease",
                 }}
                 onError={(e) => {
-                  // Fallback para imagens que não carregam
                   const target = e.target as HTMLImageElement;
                   target.style.display = "none";
                   const parent = target.parentElement;
@@ -118,7 +135,7 @@ export default function ProductGrid({
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={1}
-                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2z"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002 2z"
                     />
                   </svg>
                   <p className="text-gray-400 text-sm">Sem imagem</p>
@@ -127,7 +144,6 @@ export default function ProductGrid({
             )}
           </div>
 
-          {/* Conteúdo do card */}
           <div
             className="p-5 flex flex-col flex-grow"
             style={{
@@ -147,22 +163,21 @@ export default function ProductGrid({
               </p>
             )}
 
-            {/* Preço e botão - com 15px de gap entre eles */}
             <div className="mt-auto">
               <div className="text-2xl font-bold text-blood-red mb-4">
                 R$ {product.price.toFixed(2)}
               </div>
 
-              {/* 15px de espaço acima do botão */}
               <div style={{ marginTop: "15px" }}>
                 <button
                   onClick={() => onAddToCart(product)}
                   disabled={adding === product.id}
-                  className={`w-full flex items-center justify-center gap-2.5 ${
+                  className={`w-full flex items-center justify-center ${
                     adding === product.id
                       ? "bg-gray-400 text-white cursor-not-allowed py-3 px-4 rounded-xl font-semibold transition-all duration-300"
                       : "btn-red text-sm"
                   }`}
+                  style={{ gap: adding === product.id ? "10px" : "8px" }}
                 >
                   {adding === product.id ? (
                     <>

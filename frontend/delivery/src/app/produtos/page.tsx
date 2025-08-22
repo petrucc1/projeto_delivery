@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import api from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Loading from "@/components/Loading";
 
 interface Product {
@@ -23,10 +24,10 @@ interface CartItem {
 
 export default function ProdutosPage() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState<number | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -40,6 +41,7 @@ export default function ProdutosPage() {
           ...p,
           price: Number(p.price),
         }));
+
         setProducts(processedProducts);
         setFilteredProducts(processedProducts);
       } catch (err) {
@@ -53,16 +55,12 @@ export default function ProdutosPage() {
   }, []);
 
   useEffect(() => {
-    if (searchTerm.trim() === "") {
-      setFilteredProducts(products);
-    } else {
-      const filtered = products.filter(
-        (product) =>
-          product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product.description.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredProducts(filtered);
-    }
+    const filtered = products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredProducts(filtered);
   }, [searchTerm, products]);
 
   const handleAddToCart = async (product: Product) => {
@@ -102,11 +100,11 @@ export default function ProdutosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white flex flex-col">
       <Header />
 
       <div
-        className="max-w-6xl mx-auto container-padding"
+        className="max-w-6xl mx-auto container-padding flex-grow"
         style={{ paddingTop: "80px", paddingBottom: "80px" }}
       >
         {/* Header da página */}
@@ -141,15 +139,14 @@ export default function ProdutosPage() {
               <input
                 type="text"
                 placeholder="Buscar produtos..."
-                className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blood-red focus:border-blood-red outline-none transition-all duration-300 bg-white shadow-sm hover:shadow-md focus:shadow-lg text-gray-900 placeholder-gray-500"
+                className="w-full text-dark bg-gray-50 text-base font-medium focus:bg-white focus:ring-2 focus:ring-blood-red focus:ring-opacity-20 focus:border-blood-red outline-none transition-all duration-300"
                 style={{
-                  fontSize: '16px',
-                  fontWeight: '500',
-                  borderRadius: '16px',
-                  padding: '16px 16px 16px 48px',
-                  border: '2px solid #e5e7eb',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)',
+                  padding: "16px 16px 16px 48px",
+                  border: "2px solid #e5e7eb",
+                  borderRadius: "50px",
+                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  boxShadow:
+                    "0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)",
                 }}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -169,49 +166,15 @@ export default function ProdutosPage() {
           </div>
         )}
 
-        {/* Grid de produtos */}
+        {/* Grade de produtos */}
         <ProductGrid
           products={filteredProducts}
           onAddToCart={handleAddToCart}
           adding={adding}
         />
-
-        {filteredProducts.length === 0 && searchTerm && (
-          <div
-            className="text-center"
-            style={{ paddingTop: "50px", paddingBottom: "50px" }}
-          >
-            <div className="max-w-md mx-auto">
-              <div
-                className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto"
-                style={{ marginBottom: "50px" }}
-              >
-                <svg
-                  className="w-12 h-12 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-dark mb-3">Nenhum produto encontrado</h3>
-              <p className="text-gray mb-6">
-                Tente pesquisar com outros termos ou navegue por todas as nossas
-                opções.
-              </p>
-              <button onClick={() => setSearchTerm("")} className="btn-red">
-                Ver Todos os Produtos
-              </button>
-            </div>
-          </div>
-        )}
       </div>
+
+      <Footer />
     </div>
   );
 }

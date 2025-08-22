@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { HiTrash, HiMinus, HiPlus } from "react-icons/hi2";
+import { HiMinus, HiPlus, HiTrash } from "react-icons/hi2";
 
 interface CartItemProps {
   item: {
@@ -40,21 +40,24 @@ export default function CartItem({
 
         {/* Informações do Produto */}
         <div className="flex-1">
-          <h3 className="font-semibold text-gray-900 mb-1 text-lg">
+          <h4
+            className="text-lg font-semibold text-dark mb-1"
+            style={{ paddingTop: "10px" }}
+          >
             {item.name}
-          </h3>
-          <p className="text-green-600 font-semibold text-xl">
+          </h4>
+          <p className="text-blood-red font-bold text-xl">
             R$ {item.price.toFixed(2)}
           </p>
-          <p className="text-sm text-gray-500 mt-1">Preço unitário</p>
         </div>
 
-        {/* Controles de Quantidade */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center bg-gray-100 rounded-xl shadow-sm">
+        {/* Controles de Quantidade e Remoção com 8px entre eles */}
+        <div className="flex items-center" style={{ gap: "8px" }}>
+          {/* Controle de Quantidade */}
+          <div className="flex items-center bg-gray-100 rounded-lg">
             <button
               onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-              className="p-3 hover:bg-gray-200 rounded-l-xl transition-colors hover:scale-105"
+              className="p-2 hover:bg-gray-200 rounded-l-lg transition-colors"
               disabled={item.quantity <= 1}
             >
               <HiMinus
@@ -64,36 +67,27 @@ export default function CartItem({
               />
             </button>
 
-            <span className="px-6 py-3 font-bold text-gray-900 min-w-[3rem] text-center text-lg">
+            <span className="px-3 py-2 min-w-[3rem] text-center font-semibold text-dark">
               {item.quantity}
             </span>
 
             <button
               onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-              className="p-3 hover:bg-gray-200 rounded-r-xl transition-colors hover:scale-105"
+              className="p-2 hover:bg-gray-200 rounded-r-lg transition-colors"
             >
               <HiPlus className="w-4 h-4 text-gray-600" />
             </button>
           </div>
 
+          {/* Botão Remover - sem sombra */}
           <button
             onClick={handleRemove}
-            className="p-3 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all hover:scale-110 shadow-sm"
+            className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-all duration-200 hover:scale-105"
             title="Remover item"
           >
             <HiTrash className="w-5 h-5" />
           </button>
         </div>
-      </div>
-
-      {/* Subtotal do Item */}
-      <div className="mt-4 flex justify-between items-center pt-4 border-t border-gray-100">
-        <span className="text-sm text-gray-500">
-          {item.quantity}x R$ {item.price.toFixed(2)}
-        </span>
-        <span className="text-lg font-bold text-gray-900">
-          R$ {(item.price * item.quantity).toFixed(2)}
-        </span>
       </div>
     </div>
   );

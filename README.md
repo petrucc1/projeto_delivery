@@ -1,92 +1,282 @@
-# Projeto Delivery
+# 🍕 Projeto Delivery - Sistema Completo de Pedidos Online
 
-Este é um sistema completo de delivery, desenvolvido com React/Next.js no frontend e Laravel no backend, utilizando MySQL como banco de dados. O objetivo é oferecer uma experiência moderna para pedidos online, com funcionalidades de cardápio, carrinho e finalização de pedidos.
+Um sistema moderno de delivery desenvolvido com **React/Next.js** no frontend e **Laravel** no backend. Interface elegante, carrinho funcional e experiência otimizada para pedidos online.
 
-## Visão Geral
+## 🎯 Visão Geral
 
-O projeto permite que usuários visualizem produtos, adicionem itens ao carrinho, ajustem quantidades e finalizem pedidos. Administradores podem cadastrar banners promocionais e gerenciar o cardápio.
+Sistema completo que permite:
 
-## Tecnologias
+- **Usuários**: Visualizar produtos, adicionar ao carrinho, ajustar quantidades e finalizar pedidos
+- **Interface moderna**: Design responsivo com animações suaves
+- **Carrossel de banners**: Promoções em destaque na página inicial
+- **Carrinho inteligente**: Cálculo automático, persistência local e validações
 
-- **Frontend:** React, Next.js, TailwindCSS
-- **Backend:** Laravel (PHP)
-- **Banco de Dados:** MySQL
+## 🚀 Tecnologias Utilizadas
 
-## Funcionalidades
+### Frontend
 
-- Carrossel de banners promocionais na página inicial
-- Listagem de produtos com imagem, nome, descrição e preço
-- Adição de produtos ao carrinho
-- Alteração de quantidade e remoção de itens no carrinho
-- Cálculo automático do subtotal
-- Finalização de pedido
+- **Next.js 15** - Framework React para produção
+- **TypeScript** - Tipagem estática
+- **TailwindCSS** - Estilização moderna
+- **React Icons** - Iconografia
+- **Swiper.js** - Carrossel responsivo
+- **Axios** - Cliente HTTP
 
-## Instalação e Execução
+### Backend
+
+- **Laravel 11** - Framework PHP robusto
+- **MySQL** - Banco de dados relacional
+- **Eloquent ORM** - Mapeamento objeto-relacional
+
+## ⚡ Funcionalidades
+
+✅ **Homepage**
+
+- Carrossel de banners promocionais
+- Grid responsivo de produtos
+- Cards com hover animado
+
+✅ **Página de Produtos**
+
+- Listagem completa do cardápio
+- Busca em tempo real
+- Filtros dinâmicos
+
+✅ **Carrinho de Compras**
+
+- Adição/remoção de itens
+- Controle de quantidade
+- Cálculo automático do total
+- Persistência no localStorage
+- Validações de estoque
+
+✅ **Responsividade**
+
+- Mobile-first design
+- Menu hamburger para dispositivos móveis
+- Layout adaptativo
+
+## 🛠️ Instalação e Execução
 
 ### Pré-requisitos
 
-- Node.js 18+
-- PHP 8.2+
-- Composer
-- MySQL
+Certifique-se de ter instalado:
 
-### Passos
+- **Node.js 18+** → [Download aqui](https://nodejs.org/)
+- **PHP 8.2+** → [Download aqui](https://www.php.net/)
+- **Composer** → [Download aqui](https://getcomposer.org/)
+- **MySQL 8.0+** → [Download aqui](https://www.mysql.com/)
 
-#### 1. Clone o repositório
+### 📋 Passo a Passo
 
-```sh
+#### 1️⃣ Clone o Repositório
+
+```bash
 git clone <url-do-repositório>
 cd projeto_delivery
 ```
 
-#### 2. Backend (Laravel)
+#### 2️⃣ Configuração do Backend (Laravel)
 
-```sh
+```bash
+# Navegue para o diretório do backend
 cd backend/delivery
-cp .env.example .env
-# Edite .env com suas credenciais do MySQL
+
+# Instale as dependências
 composer install
+
+# Configure o arquivo de ambiente
+cp .env.example .env
+```
+
+**⚠️ IMPORTANTE: Configure o .env**
+
+Abra o arquivo `.env` e configure:
+
+```env
+# Banco de dados
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=delivery
+DB_USERNAME=root
+DB_PASSWORD=sua_senha_mysql
+
+# Configurações da aplicação
+APP_URL=http://localhost:8000
+APP_DEBUG=true
+```
+
+```bash
+# Gere a chave da aplicação
+php artisan key:generate
+
+# Execute as migrações e popule o banco
 php artisan migrate --seed
+
+# Inicie o servidor
 php artisan serve
 ```
-O backend estará disponível em `http://localhost:8000`.
 
-#### 3. Frontend (Next.js)
+**✅ Backend rodando em:** `http://localhost:8000`
 
-```sh
-cd ../../frontend/delivery
+#### 3️⃣ Configuração do Frontend (Next.js)
+
+```bash
+# Em um novo terminal, navegue para o frontend
+cd frontend/delivery
+
+# Instale as dependências
 npm install
+
+# Inicie o servidor de desenvolvimento
 npm run dev
 ```
-O frontend estará disponível em `http://localhost:3000`.
 
-#### 4. Banco de Dados
+**✅ Frontend rodando em:** `http://localhost:3000`
 
-- Crie um banco MySQL chamado `delivery`.
-- Configure as variáveis de ambiente do backend em `.env`.
+#### 4️⃣ Configuração do Banco de Dados
 
-## Estrutura de Pastas
+**Opção 1: Via MySQL Workbench ou phpMyAdmin**
+
+```sql
+CREATE DATABASE delivery;
+```
+
+**Opção 2: Via linha de comando**
+
+```bash
+mysql -u root -p
+CREATE DATABASE delivery;
+exit
+```
+
+### 🎯 Testando a Aplicação
+
+1. **Acesse:** `http://localhost:3000`
+2. **Navegue** pelos produtos na homepage
+3. **Adicione itens** ao carrinho
+4. **Teste** as funcionalidades de busca
+5. **Finalize** um pedido
+
+## 📁 Estrutura do Projeto
 
 ```
 projeto_delivery/
-  backend/
-    delivery/
-      ...
-  frontend/
-    delivery/
-      ...
+├── backend/delivery/          # API Laravel
+│   ├── app/Http/Controllers/  # Controladores da API
+│   ├── database/seeders/      # Dados de exemplo
+│   ├── routes/api.php         # Rotas da API
+│   └── .env.example          # Configurações de exemplo
+│
+├── frontend/delivery/         # App Next.js
+│   ├── src/app/              # Páginas da aplicação
+│   ├── src/components/       # Componentes reutilizáveis
+│   ├── src/lib/             # Configurações (API)
+│   └── public/              # Assets estáticos
+│
+└── README.md                 # Este arquivo
 ```
 
-## Rotas Principais
+## 🌐 Principais Rotas
 
-- `/` — Página inicial e cardápio
-- `/cart` — Carrinho de compras
+### Frontend
 
-## Observações
+- `/` - Homepage com carrossel e produtos em destaque
+- `/produtos` - Catálogo completo com busca
+- `/cart` - Carrinho de compras
+- `/obrigado` - Confirmação de pedido
 
-- O frontend consome a API do backend via Axios.
-- Para produção, configure variáveis de ambiente e permissões conforme documentação oficial.
+### API Backend
 
-## Licença
+- `GET /api/products` - Lista todos os produtos
+- `GET /api/banners` - Carrossel de banners
+- `POST /api/cart` - Adiciona item ao carrinho
 
-MIT
+## 🚨 Solução de Problemas
+
+### ❌ Erro: "Connection refused"
+
+**Solução:** Verifique se o MySQL está rodando
+
+```bash
+# Windows
+net start mysql
+
+# macOS/Linux
+sudo service mysql start
+```
+
+### ❌ Erro: "CORS blocked"
+
+**Solução:** Verifique as URLs no arquivo `.env` do backend
+
+### ❌ Erro: "npm install falha"
+
+**Solução:** Use Node.js 18+ ou limpe o cache
+
+```bash
+npm cache clean --force
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### ❌ Produtos não aparecem
+
+**Solução:** Execute o seeder novamente
+
+```bash
+cd backend/delivery
+php artisan migrate:fresh --seed
+```
+
+## 🎨 Funcionalidades em Destaque
+
+### Interface Moderna
+
+- Design minimalista e elegante
+- Animações suaves em hover
+- Feedback visual em todas as ações
+- Loading states durante requisições
+
+### Carrinho Inteligente
+
+- Persistência entre sessões
+- Cálculos automáticos de total
+- Controle de quantidade otimizado
+- Validações em tempo real
+
+### Responsividade
+
+- Mobile-first approach
+- Menu adaptativo
+- Grid flexível para produtos
+- Breakpoints otimizados
+
+## 📝 Observações Técnicas
+
+- **API RESTful** bem estruturada
+- **TypeScript** para type safety
+- **Componentização** modular
+- **Estado global** via localStorage
+- **Error boundaries** implementados
+- **SEO otimizado** com Next.js
+
+## 📞 Suporte
+
+Se encontrar algum problema durante a instalação:
+
+1. Verifique se todas as dependências estão instaladas
+2. Confirme as versões do Node.js e PHP
+3. Certifique-se que o MySQL está rodando
+4. Valide as configurações do arquivo `.env`
+
+## 📄 Licença
+
+Este projeto está sob a licença **MIT** - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+---
+
+**Desenvolvido com ❤️ por Sarah Petrucci**
+
+_Sistema completo de delivery com foco na experiência do usuário e código limpo._

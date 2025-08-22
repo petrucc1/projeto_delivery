@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import api from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
 import BannerCarousel from "@/components/Carrossel";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Loading from "@/components/Loading";
 
 interface Product {
@@ -41,7 +41,6 @@ export default function HomePage() {
           price: Number(p.price),
         }));
 
-        // Pega os primeiros 8 produtos para a homepage
         setProducts(processedProducts.slice(0, 8));
       } catch (err) {
         console.error("Erro ao buscar produtos:", err);
@@ -90,66 +89,33 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white flex flex-col">
       <Header />
 
-      {/* Banner */}
       <div className="w-full h-72 md:h-80 lg:h-96 shadow-lg">
         <BannerCarousel />
       </div>
 
-      {/* Conteúdo principal com 50px de spacing */}
       <div
-        className="max-w-6xl mx-auto container-padding"
+        className="max-w-6xl mx-auto container-padding flex-grow"
         style={{ paddingTop: "50px", paddingBottom: "80px" }}
       >
-        {/* Seção Destaques */}
         <div className="text-center" style={{ marginBottom: "50px" }}>
           <h1 className="text-dark mb-4">Destaques do Dia</h1>
-          <p className="text-gray text-lg max-w-2xl mx-auto">
+          <p className="text-gray text-lg max-w-2xl mx-auto mb-8">
             Confira os pratos mais pedidos e deliciosos do nosso cardápio
             especial de hoje
           </p>
         </div>
 
-        <div style={{ marginBottom: "50px" }}>
-          <ProductGrid
-            products={products}
-            onAddToCart={handleAddToCart}
-            adding={adding}
-          />
-        </div>
-
-        {/* Call to Action para ver mais produtos - botão menor */}
-        <div className="text-center">
-          <div className="bg-gray-50 rounded-2xl p-8 max-w-2xl mx-auto">
-            <h3 className="text-dark mb-4">Quer ver mais opções?</h3>
-            <p className="text-gray mb-6">
-              Temos muito mais sabores esperando por você! Explore nosso
-              cardápio completo com mais de 20 produtos deliciosos.
-            </p>
-            <Link
-              href="/produtos"
-              className="btn-red inline-flex items-center gap-2 text-sm"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-              Ver Cardápio Completo
-            </Link>
-          </div>
-        </div>
+        <ProductGrid
+          products={products}
+          onAddToCart={handleAddToCart}
+          adding={adding}
+        />
       </div>
+
+      <Footer />
     </div>
   );
 }

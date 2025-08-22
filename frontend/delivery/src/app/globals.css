@@ -63,7 +63,7 @@ p {
 
 a {
   font-family: inherit;
-  color: #8B0000;
+  color: #8b0000;
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -72,7 +72,8 @@ a:hover {
   color: #dc2626;
 }
 
-ul, ol {
+ul,
+ol {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   list-style: none;
   padding: 0;
@@ -147,27 +148,37 @@ img {
 }
 
 .text-blood-red {
-  color: #8B0000;
+  color: #8b0000;
 }
 
 .bg-blood-red {
-  background-color: #8B0000;
+  background-color: #8b0000;
 }
 
 .border-blood-red {
-  border-color: #8B0000;
+  border-color: #8b0000;
+}
+
+/* Cores mais escuras para bordas e separadores */
+.border-gray-200 {
+  border-color: #e5e7eb;
+}
+
+.divide-gray-200 {
+  border-color: #e5e7eb;
 }
 
 /* Botões padronizados - tamanho mais delicado */
 .btn-red {
-  background-color: #8B0000;
+  background-color: #8b0000;
   color: #ffffff !important;
   border-radius: 12px;
   padding: 10px 20px;
   font-weight: 600;
   font-size: 14px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 6px -1px rgba(139, 0, 0, 0.1), 0 2px 4px -1px rgba(139, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(139, 0, 0, 0.1),
+    0 2px 4px -1px rgba(139, 0, 0, 0.06);
   position: relative;
   overflow: hidden;
 }
@@ -207,8 +218,8 @@ img {
 /* Botão outline vermelho */
 .btn-red-outline {
   background-color: transparent;
-  color: #8B0000 !important;
-  border: 2px solid #8B0000;
+  color: #8b0000 !important;
+  border: 2px solid #8b0000;
   border-radius: 12px;
   padding: 8px 20px;
   font-weight: 600;
@@ -225,7 +236,7 @@ img {
   left: 0;
   width: 0;
   height: 100%;
-  background-color: #8B0000;
+  background-color: #8b0000;
   transition: width 0.3s ease;
   z-index: -1;
 }
@@ -239,6 +250,25 @@ img {
 
 .btn-red-outline:hover::before {
   width: 100%;
+}
+
+/* Sombras mais suaves para seções do carrinho */
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 3px 0 rgba(0, 0, 0, 0.02);
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08),
+    0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Classe para sections com padding e bordas arredondadas mais elegantes */
+.cart-section {
+  background-color: white;
+  border-radius: 16px;
+  padding: 15px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 3px 0 rgba(0, 0, 0, 0.02);
+  border: 1px solid #e5e7eb;
 }
 
 /* Customização do Swiper */
