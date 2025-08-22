@@ -63,7 +63,7 @@ p {
 
 a {
   font-family: inherit;
-  color: #8b0000;
+  color: #8B0000;
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -72,8 +72,7 @@ a:hover {
   color: #dc2626;
 }
 
-ul,
-ol {
+ul, ol {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   list-style: none;
   padding: 0;
@@ -128,6 +127,16 @@ img {
   padding-top: 0;
 }
 
+/* Espaçamento de 50px entre divs */
+.spacing-50 {
+  margin-bottom: 50px;
+}
+
+.padding-50 {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
 /* Cores do tema */
 .text-dark {
   color: #1a1a1a;
@@ -138,15 +147,98 @@ img {
 }
 
 .text-blood-red {
-  color: #8b0000;
+  color: #8B0000;
 }
 
 .bg-blood-red {
-  background-color: #8b0000;
+  background-color: #8B0000;
 }
 
 .border-blood-red {
-  border-color: #8b0000;
+  border-color: #8B0000;
+}
+
+/* Botões padronizados - tamanho mais delicado */
+.btn-red {
+  background-color: #8B0000;
+  color: #ffffff !important;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(139, 0, 0, 0.1), 0 2px 4px -1px rgba(139, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-red::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-red:hover {
+  background-color: #a00;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px -3px rgba(139, 0, 0, 0.2),
+    0 4px 6px -2px rgba(139, 0, 0, 0.1);
+}
+
+.btn-red:hover::before {
+  left: 100%;
+}
+
+.btn-red:active {
+  transform: translateY(0px);
+  transition: transform 0.1s ease;
+}
+
+/* Botão outline vermelho */
+.btn-red-outline {
+  background-color: transparent;
+  color: #8B0000 !important;
+  border: 2px solid #8B0000;
+  border-radius: 12px;
+  padding: 8px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-red-outline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #8B0000;
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+
+.btn-red-outline:hover {
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px -3px rgba(139, 0, 0, 0.2),
+    0 4px 6px -2px rgba(139, 0, 0, 0.1);
+}
+
+.btn-red-outline:hover::before {
+  width: 100%;
 }
 
 /* Customização do Swiper */

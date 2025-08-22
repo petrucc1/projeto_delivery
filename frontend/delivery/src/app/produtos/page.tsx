@@ -53,7 +53,6 @@ export default function ProdutosPage() {
   }, []);
 
   useEffect(() => {
-    // Filtra produtos baseado no termo de busca
     if (searchTerm.trim() === "") {
       setFilteredProducts(products);
     } else {
@@ -106,19 +105,25 @@ export default function ProdutosPage() {
     <div className="min-h-screen bg-white">
       <Header />
 
-      <div className="max-w-6xl mx-auto container-padding section-spacing">
+      <div
+        className="max-w-6xl mx-auto container-padding"
+        style={{ paddingTop: "80px", paddingBottom: "80px" }}
+      >
         {/* Header da página */}
-        <div className="text-center mb-12">
+        <div className="text-center" style={{ marginBottom: "50px" }}>
           <h1 className="text-dark mb-4">Nossos Produtos</h1>
-          <p className="text-gray text-lg max-w-2xl mx-auto mb-8">
+          <p
+            className="text-gray text-lg max-w-2xl mx-auto"
+            style={{ marginBottom: "50px" }}
+          >
             Explore todo nosso cardápio com mais de {products.length} opções
             deliciosas para você
           </p>
 
-          {/* Barra de pesquisa */}
-          <div className="max-w-md mx-auto">
+          {/* Barra de pesquisa mais bonita e elegante */}
+          <div className="max-w-lg mx-auto">
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <svg
                   className="h-5 w-5 text-gray-400"
                   fill="none"
@@ -136,7 +141,16 @@ export default function ProdutosPage() {
               <input
                 type="text"
                 placeholder="Buscar produtos..."
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blood-red focus:border-blood-red outline-none transition-colors"
+                className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blood-red focus:border-blood-red outline-none transition-all duration-300 bg-white shadow-sm hover:shadow-md focus:shadow-lg text-gray-900 placeholder-gray-500"
+                style={{
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  borderRadius: '16px',
+                  padding: '16px 16px 16px 48px',
+                  border: '2px solid #e5e7eb',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)',
+                }}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -146,7 +160,7 @@ export default function ProdutosPage() {
 
         {/* Resultados da busca */}
         {searchTerm && (
-          <div className="mb-6">
+          <div style={{ marginBottom: "50px" }}>
             <p className="text-gray">
               {filteredProducts.length > 0
                 ? `Encontrados ${filteredProducts.length} produto(s) para "${searchTerm}"`
@@ -163,9 +177,15 @@ export default function ProdutosPage() {
         />
 
         {filteredProducts.length === 0 && searchTerm && (
-          <div className="text-center py-12">
+          <div
+            className="text-center"
+            style={{ paddingTop: "50px", paddingBottom: "50px" }}
+          >
             <div className="max-w-md mx-auto">
-              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div
+                className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto"
+                style={{ marginBottom: "50px" }}
+              >
                 <svg
                   className="w-12 h-12 text-gray-400"
                   fill="none"
@@ -185,10 +205,7 @@ export default function ProdutosPage() {
                 Tente pesquisar com outros termos ou navegue por todas as nossas
                 opções.
               </p>
-              <button
-                onClick={() => setSearchTerm("")}
-                className="bg-blood-red hover:bg-red-800 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
-              >
+              <button onClick={() => setSearchTerm("")} className="btn-red">
                 Ver Todos os Produtos
               </button>
             </div>

@@ -41,8 +41,8 @@ export default function HomePage() {
           price: Number(p.price),
         }));
 
-        // Pega apenas os primeiros 6 produtos para a homepage
-        setProducts(processedProducts.slice(0, 6));
+        // Pega os primeiros 8 produtos para a homepage
+        setProducts(processedProducts.slice(0, 8));
       } catch (err) {
         console.error("Erro ao buscar produtos:", err);
       } finally {
@@ -98,24 +98,30 @@ export default function HomePage() {
         <BannerCarousel />
       </div>
 
-      {/* Conteúdo principal */}
-      <div className="max-w-6xl mx-auto container-padding section-spacing-bottom">
+      {/* Conteúdo principal com 50px de spacing */}
+      <div
+        className="max-w-6xl mx-auto container-padding"
+        style={{ paddingTop: "50px", paddingBottom: "80px" }}
+      >
         {/* Seção Destaques */}
-        <div className="text-center mb-12">
-          <h1 className="text-dark mb-4">Destaques do Cardápio</h1>
+        <div className="text-center" style={{ marginBottom: "50px" }}>
+          <h1 className="text-dark mb-4">Destaques do Dia</h1>
           <p className="text-gray text-lg max-w-2xl mx-auto">
-            Confira alguns dos nossos pratos mais pedidos e deliciosos
+            Confira os pratos mais pedidos e deliciosos do nosso cardápio
+            especial de hoje
           </p>
         </div>
 
-        <ProductGrid
-          products={products}
-          onAddToCart={handleAddToCart}
-          adding={adding}
-        />
+        <div style={{ marginBottom: "50px" }}>
+          <ProductGrid
+            products={products}
+            onAddToCart={handleAddToCart}
+            adding={adding}
+          />
+        </div>
 
-        {/* Call to Action para ver mais produtos */}
-        <div className="text-center mt-12">
+        {/* Call to Action para ver mais produtos - botão menor */}
+        <div className="text-center">
           <div className="bg-gray-50 rounded-2xl p-8 max-w-2xl mx-auto">
             <h3 className="text-dark mb-4">Quer ver mais opções?</h3>
             <p className="text-gray mb-6">
@@ -124,10 +130,10 @@ export default function HomePage() {
             </p>
             <Link
               href="/produtos"
-              className="inline-flex items-center gap-2 bg-blood-red hover:bg-red-800 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:scale-105 shadow-lg hover:shadow-xl"
+              className="btn-red inline-flex items-center gap-2 text-sm"
             >
               <svg
-                className="w-5 h-5"
+                className="w-4 h-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

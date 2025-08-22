@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface CartItem {
   id: number;
@@ -40,8 +40,11 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto container-padding py-4">
+    <header
+      className="bg-white sticky top-0 z-50"
+      style={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0.04)" }}
+    >
+      <div className="max-w-6xl mx-auto container-padding py-6">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div>
@@ -52,26 +55,28 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Navegação */}
-          <div className="flex items-center gap-6">
+          {/* Navegação com mais espaçamento entre os itens */}
+          <div className="flex items-center" style={{ gap: "32px" }}>
             <Link
               href="/"
               className="text-gray hover:text-blood-red font-medium transition-colors duration-200"
+              style={{ padding: "8px 12px" }}
             >
               Início
             </Link>
-            
+
             <Link
               href="/produtos"
               className="text-gray hover:text-blood-red font-medium transition-colors duration-200"
+              style={{ padding: "8px 12px" }}
             >
               Produtos
             </Link>
 
             <Link href="/cart">
-              <div className="bg-blood-red hover:bg-red-800 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg flex items-center gap-2 relative cursor-pointer">
+              <div className="btn-red flex items-center gap-2 relative cursor-pointer text-sm">
                 <svg
-                  className="w-5 h-5"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -85,7 +90,7 @@ export default function Header() {
                 </svg>
                 Carrinho
                 {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-white text-blood-red text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold">
+                  <span className="absolute -top-2 -right-2 bg-white text-blood-red text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold text-xs">
                     {cartCount}
                   </span>
                 )}

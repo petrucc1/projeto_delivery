@@ -50,19 +50,16 @@ export default function ProductGrid({
             display: "flex",
             flexDirection: "column",
             height: "100%",
-            // Sombra sutil e mais delicada
             boxShadow:
               "0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02)",
             transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           }}
           onMouseEnter={(e) => {
-            // Hover muito mais sutil
             e.currentTarget.style.boxShadow =
               "0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04)";
             e.currentTarget.style.transform = "translateY(-2px)";
           }}
           onMouseLeave={(e) => {
-            // Volta suavemente ao estado original
             e.currentTarget.style.boxShadow =
               "0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02)";
             e.currentTarget.style.transform = "translateY(0px)";
@@ -89,6 +86,24 @@ export default function ProductGrid({
                   objectFit: "cover",
                   transition: "transform 0.4s ease",
                 }}
+                onError={(e) => {
+                  // Fallback para imagens que não carregam
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = "none";
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.innerHTML = `
+                      <div class="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                        <div class="text-center">
+                          <svg class="w-16 h-16 text-gray-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2z"/>
+                          </svg>
+                          <p class="text-gray-400 text-sm">Sem imagem</p>
+                        </div>
+                      </div>
+                    `;
+                  }
+                }}
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
@@ -103,7 +118,7 @@ export default function ProductGrid({
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={1}
-                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2z"
                     />
                   </svg>
                   <p className="text-gray-400 text-sm">Sem imagem</p>
@@ -132,42 +147,36 @@ export default function ProductGrid({
               </p>
             )}
 
-            {/* Preço e botão - sempre no final */}
-            <div className="mt-auto space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="text-2xl font-bold text-blood-red">
-                  R$ {product.price.toFixed(2)}
-                </div>
+            {/* Preço e botão - com 15px de gap entre eles */}
+            <div className="mt-auto">
+              <div className="text-2xl font-bold text-blood-red mb-4">
+                R$ {product.price.toFixed(2)}
               </div>
 
-              <button
-                onClick={() => onAddToCart(product)}
-                disabled={adding === product.id}
-                className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2.5 ${
-                  adding === product.id
-                    ? "bg-gray-400 text-white cursor-not-allowed"
-                    : "bg-blood-red hover:bg-red-800 text-white shadow-md hover:shadow-lg"
-                }`}
-                style={{
-                  borderRadius: "12px",
-                  padding: "12px 16px",
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  transition: "all 0.3s ease",
-                }}
-              >
-                {adding === product.id ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Adicionando...
-                  </>
-                ) : (
-                  <>
-                    <HiShoppingCart className="w-5 h-5" />
-                    Adicionar ao Carrinho
-                  </>
-                )}
-              </button>
+              {/* 15px de espaço acima do botão */}
+              <div style={{ marginTop: "15px" }}>
+                <button
+                  onClick={() => onAddToCart(product)}
+                  disabled={adding === product.id}
+                  className={`w-full flex items-center justify-center gap-2.5 ${
+                    adding === product.id
+                      ? "bg-gray-400 text-white cursor-not-allowed py-3 px-4 rounded-xl font-semibold transition-all duration-300"
+                      : "btn-red text-sm"
+                  }`}
+                >
+                  {adding === product.id ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Adicionando...
+                    </>
+                  ) : (
+                    <>
+                      <HiShoppingCart className="w-4 h-4" />
+                      Adicionar ao Carrinho
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
