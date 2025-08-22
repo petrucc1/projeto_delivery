@@ -12,7 +12,7 @@ class BannerController extends Controller
     public function index(Request $request)
     {
         $banners = Banner::where('active', true)->get();
-        return response()->json($banners);
+        return response()->json(['banners' => $banners]);
     }
 
     // Retorna um banner específico pelo ID
