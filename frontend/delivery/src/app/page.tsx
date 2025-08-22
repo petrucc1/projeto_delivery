@@ -5,6 +5,7 @@ import api from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
 import BannerCarousel from "@/components/Carrossel";
 import Header from "@/components/Header";
+import Loading from "@/components/Loading";
 
 interface Product {
   id: number;
@@ -90,19 +91,14 @@ export default function HomePage() {
     setAdding(null);
   };
 
-  if (loading)
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-3 border-gray-300 border-t-green-500 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">Carregando...</p>
-        </div>
-      </div>
-    );
+  // Loading bonito sem flash de fonte
+  if (loading) {
+    return <Loading message="Carregando nosso delicioso cardápio" />;
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+    <div className="min-h-screen bg-white">
+      {/* Header - deve aparecer sempre */}
       <Header />
 
       {/* Banner com altura padronizada */}

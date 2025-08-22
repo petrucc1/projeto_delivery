@@ -35,7 +35,7 @@ export default function BannerCarousel() {
   if (loading) {
     return (
       <div className="w-full h-full bg-gray-300 animate-pulse flex items-center justify-center">
-        <p className="text-gray-600">Carregando...</p>
+        <p className="text-gray-600">Carregando banners...</p>
       </div>
     );
   }
@@ -58,20 +58,28 @@ export default function BannerCarousel() {
           delay: 9000,
           disableOnInteraction: false,
         }}
-        navigation={true}
+        navigation={banners.length > 1}
         pagination={{
           clickable: true,
+          enabled: banners.length > 1,
         }}
-        loop={true}
+        loop={false}
         className="w-full h-full custom-swiper"
       >
         {banners.map((banner) => (
           <SwiperSlide key={banner.id}>
-            <img
-              src={banner.image_url}
-              alt={banner.title || "Banner"}
-              className="w-full h-full object-cover"
-            />
+            <div className="w-full h-full relative">
+              <img
+                src={banner.image_url}
+                alt={banner.title || "Banner"}
+                className="w-full h-full object-cover"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

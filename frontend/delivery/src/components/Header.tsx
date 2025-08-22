@@ -1,31 +1,80 @@
 "use client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+}
 
 export default function Header() {
-  return (
-    <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 sticky top-0 z-40">
-      <div className="max-w-6xl mx-auto px-4 py-3">
-        <div className="flex justify-between items-center">
-          {/* Logo/Título menor e mais elegante */}
-          <Link href="/" className="group">
-            <h1 className="text-xl font-semibold text-gray-900 group-hover:text-green-600 transition-colors duration-200">
-              DeliveryApp
-            </h1>
-          </Link>
+  const [cartCount, setCartCount] = useState(0);
 
-          {/* Navegação com estilo melhorado */}
-          <nav className="flex items-center gap-8">
+  useEffect(() => {
+    const updateCartCount = () => {
+      try {
+        const storedCart = localStorage.getItem("cart");
+        if (storedCart) {
+          const cart: CartItem[] = JSON.parse(storedCart);
+          const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+          setCartCount(totalItems);
+        } else {
+          setCartCount(0);
+        }
+      } catch (error) {
+        console.error("Erro ao atualizar contador do carrinho:", error);
+        setCartCount(0);
+      }
+    };
+
+    updateCartCount();
+    window.addEventListener("storage", updateCartCount);
+    window.addEventListener("cartUpdated", updateCartCount);
+
+    return () => {
+      window.removeEventListener("storage", updateCartCount);
+      window.removeEventListener("cartUpdated", updateCartCount);
+    };
+  }, []);
+
+  return (
+    <header
+      className="w-full bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50"
+      style={{
+        backgroundColor: "#ffffff",
+        borderBottom: "1px solid #e5e7eb",
+        position: "sticky",
+        top: 0,
+        zIndex: 50,
+      }}
+    >
+      <div className="max-w-6xl mx-auto px-4 py-4">
+        <div className="flex justify-between items-center">
+          {/* Logo */}
+          <div>
+            <Link href="/">
+              <h1 className="text-2xl font-bold text-gray-900 hover:text-green-600 transition-colors duration-200">
+                DeliveryApp
+              </h1>
+            </Link>
+          </div>
+
+          {/* Navegação */}
+          <div className="flex items-center gap-6">
             <Link
               href="/"
-              className="text-gray-700 hover:text-green-600 font-medium transition-all duration-200 hover:scale-105 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-green-600 after:transition-all after:duration-200 hover:after:w-full"
+              className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200"
             >
               Cardápio
             </Link>
 
             <Link href="/cart">
-              <button className="bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 rounded-full font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg flex items-center gap-2.5">
+              <div className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg flex items-center gap-2 relative cursor-pointer">
+                {/* Ícone do carrinho */}
                 <svg
-                  className="w-4 h-4"
+                  className="w-5 h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -38,9 +87,15 @@ export default function Header() {
                   />
                 </svg>
                 Carrinho
-              </button>
+                {/* Badge do contador */}
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
             </Link>
-          </nav>
+          </div>
         </div>
       </div>
     </header>
