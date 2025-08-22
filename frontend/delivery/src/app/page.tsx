@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import api from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
 import BannerCarousel from "@/components/Carrossel";
-import Link from "next/link";
+import Header from "@/components/Header";
 
 interface Product {
   id: number;
@@ -29,7 +29,9 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchProducts() {
       try {
+        console.log("Buscando produtos...");
         const res = await api.get("/products");
+        console.log("Resposta produtos:", res.data);
         const data = res.data as { products: Product[] };
         const products = Array.isArray(data.products) ? data.products : [];
         setProducts(
@@ -74,6 +76,7 @@ export default function HomePage() {
 
       // Salva no localStorage
       localStorage.setItem("cart", JSON.stringify(cart));
+      console.log("Produto adicionado ao carrinho:", cart);
 
       // Opcional: chama API para confirmar
       await api.post("/cart", { product_id: product.id });
@@ -84,25 +87,33 @@ export default function HomePage() {
     setAdding(null);
   };
 
-  if (loading) return <p>Carregando produtos...</p>;
+  if (loading)
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p>Carregando...</p>
+      </div>
+    );
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="h-64 mb-8 rounded-lg overflow-hidden">
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <Header />
+
+      {/* Banner */}
+      <div className="w-full h-80">
         <BannerCarousel />
       </div>
-      <h1 className="text-2xl font-bold mb-4">Cardápio</h1>
-      <ProductGrid
-        products={products}
-        onAddToCart={handleAddToCart}
-        adding={adding}
-      />
-      <div className="flex justify-end mt-8">
-        <Link href="/cart">
-          <button className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600">
-            Ver Carrinho
-          </button>
-        </Link>
+
+      {/* Conteúdo principal */}
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <h2 className="text-3xl font-bold mb-8 text-gray-800">
+          Nosso Cardápio
+        </h2>
+        <ProductGrid
+          products={products}
+          onAddToCart={handleAddToCart}
+          adding={adding}
+        />
       </div>
     </div>
   );

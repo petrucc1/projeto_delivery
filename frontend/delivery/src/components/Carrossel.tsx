@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import api from "@/lib/api";
 
 interface Banner {
@@ -12,39 +11,85 @@ interface Banner {
 export default function BannerCarousel() {
   const [banners, setBanners] = useState<Banner[]>([]);
   const [current, setCurrent] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get<{ banners: Banner[] }>("/banners").then(res => setBanners(res.data.banners || []));
+    console.log("Buscando banners...");
+    api
+      .get("/banners")
+      .then((res) => {
+        console.log("Banners recebidos:", res.data);
+        setBanners(res.data.banners || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar banners:", err);
+        setLoading(false);
+      });
   }, []);
 
+  // Auto-play simples
   useEffect(() => {
-    if (banners.length === 0) return;
+    if (banners.length <= 1) return;
+
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % banners.length);
-    }, 4000);
+    }, 6000);
+
     return () => clearInterval(timer);
   }, [banners.length]);
 
-  if (banners.length === 0) return null;
+  const nextBanner = () => {
+    setCurrent((prev) => (prev + 1) % banners.length);
+  };
+
+  const prevBanner = () => {
+    setCurrent((prev) => (prev - 1 + banners.length) % banners.length);
+  };
+
+  if (loading) {
+    return (
+      <div className="w-full h-full bg-gray-300 animate-pulse flex items-center justify-center">
+        <p className="text-gray-600">Carregando...</p>
+      </div>
+    );
+  }
+
+  if (banners.length === 0) {
+    return (
+      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+        <p className="text-gray-600">Sem banners disponíveis</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="relative w-full h-full">
-      {banners.map((banner, idx) => (
-        <Image
-          key={banner.id}
-          src={banner.image_url}
-          alt={banner.title || `Banner ${idx + 1}`}
-          fill
-          sizes="100vw"
-          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-700 ${idx === current ? "opacity-100" : "opacity-0"}`}
-          priority={idx === 0}
-        />
-      ))}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
-        {banners.map((_, idx) => (
-          <span key={idx} className={`w-2 h-2 rounded-full ${idx === current ? "bg-blue-500" : "bg-gray-300"}`}></span>
-        ))}
-      </div>
+    <div className="relative w-full h-full bg-gray-800">
+      {/* Imagem atual */}
+      <img
+        src={banners[current]?.image_url}
+        alt={`Banner ${current + 1}`}
+        className="w-full h-full object-cover"
+      />
+
+      {/* Setas simples */}
+      {banners.length > 1 && (
+        <>
+          <button
+            onClick={prevBanner}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 text-black rounded-full w-10 h-10 flex items-center justify-center shadow-lg"
+          >
+            ←
+          </button>
+
+          <button
+            onClick={nextBanner}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 text-black rounded-full w-10 h-10 flex items-center justify-center shadow-lg"
+          >
+            →
+          </button>
+        </>
+      )}
     </div>
   );
 }
