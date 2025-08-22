@@ -78,6 +78,9 @@ export default function HomePage() {
       localStorage.setItem("cart", JSON.stringify(cart));
       console.log("Produto adicionado ao carrinho:", cart);
 
+      // Dispara evento para atualizar contador do carrinho
+      window.dispatchEvent(new Event("cartUpdated"));
+
       // Opcional: chama API para confirmar
       await api.post("/cart", { product_id: product.id });
     } catch (error) {
@@ -90,7 +93,10 @@ export default function HomePage() {
   if (loading)
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p>Carregando...</p>
+        <div className="text-center">
+          <div className="w-12 h-12 border-3 border-gray-300 border-t-green-500 rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600 text-lg">Carregando...</p>
+        </div>
       </div>
     );
 
@@ -99,16 +105,22 @@ export default function HomePage() {
       {/* Header */}
       <Header />
 
-      {/* Banner */}
-      <div className="w-full h-80">
+      {/* Banner com altura padronizada */}
+      <div className="w-full h-72 md:h-80 lg:h-96 shadow-lg">
         <BannerCarousel />
       </div>
 
       {/* Conteúdo principal */}
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <h2 className="text-3xl font-bold mb-8 text-gray-800">
-          Nosso Cardápio
-        </h2>
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Nosso Cardápio
+          </h2>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            Descubra os sabores únicos que preparamos especialmente para você
+          </p>
+        </div>
+
         <ProductGrid
           products={products}
           onAddToCart={handleAddToCart}
