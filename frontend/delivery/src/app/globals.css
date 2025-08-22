@@ -58,6 +58,49 @@ img {
   display: block;
 }
 
+/* Customização do Swiper */
+.custom-swiper .swiper-button-next,
+.custom-swiper .swiper-button-prev {
+  color: white !important;
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-radius: 50% !important;
+  width: 44px !important;
+  height: 44px !important;
+  margin-top: -22px !important;
+  transition: all 0.3s ease !important;
+}
+
+.custom-swiper .swiper-button-next:hover,
+.custom-swiper .swiper-button-prev:hover {
+  background: rgba(0, 0, 0, 0.6) !important;
+  transform: scale(1.1) !important;
+}
+
+.custom-swiper .swiper-button-next:after,
+.custom-swiper .swiper-button-prev:after {
+  font-size: 18px !important;
+  font-weight: bold !important;
+}
+
+.custom-swiper .swiper-pagination-bullet {
+  background: #000000 !important;
+  opacity: 0.4 !important;
+  width: 12px !important;
+  height: 12px !important;
+  margin: 0 6px !important;
+  transition: all 0.3s ease !important;
+}
+
+.custom-swiper .swiper-pagination-bullet-active {
+  background: #8b0000 !important;
+  opacity: 1 !important;
+  transform: scale(1.2) !important;
+}
+
+.custom-swiper .swiper-pagination {
+  bottom: 20px !important;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
