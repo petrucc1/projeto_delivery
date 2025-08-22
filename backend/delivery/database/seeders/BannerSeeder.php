@@ -14,20 +14,17 @@ class BannerSeeder extends Seeder
         // Lista de banners para serem inseridos
         $banners = [
             [
-                'image_url' => 'https://img.cdndsgni.com/preview/11713788.jpg',
-                'title' => 'Promoção de Pizzas',
-                'active' => true,
+                'title' => 'Promoção Pizza',
+                'image_url' => 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&h=400&fit=crop'
             ],
             [
-                'image_url' => 'https://img.cdndsgni.com/preview/10109390.jpg',
-                'title' => 'Combo Hambúrguer + Refrigerante',
-                'active' => true,
+                'title' => 'Delivery Rápido',
+                'image_url' => 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&h=400&fit=crop'
             ],
             [
-                'image_url' => 'https://img.cdndsgni.com/preview/11856227.jpg',
-                'title' => 'Suco Natural do Dia',
-                'active' => false, // inativo, não aparece no index
-            ],
+                'title' => 'Novos Sabores',
+                'image_url' => 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&h=400&fit=crop'
+            ]
         ];
 
         // Percorre cada banner e insere no banco de dados

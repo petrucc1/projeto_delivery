@@ -4,67 +4,119 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {
     // Lista produtos com paginação (JSON limpo)
-    public function index()
+    public function index(): JsonResponse
     {
-        $products = Product::paginate(10);
+        try {
+            $products = Product::paginate(20);
 
-        return response()->json([
-            'products' => $products->items(), // apenas os produtos
-            'pagination' => [
-                'current_page' => $products->currentPage(),
-                'per_page' => $products->perPage(),
-                'total' => $products->total(),
-                'last_page' => $products->lastPage(),
-            ]
-        ]);
+            return response()->json([
+                'success' => true,
+                'products' => $products->items(), // apenas os produtos
+                'pagination' => [
+                    'current_page' => $products->currentPage(),
+                    'per_page' => $products->perPage(),
+                    'total' => $products->total(),
+                    'last_page' => $products->lastPage(),
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao carregar produtos',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     // Exibe um produto específico pelo ID
-    public function show($id)
+    public function show($id): JsonResponse
     {
-        $product = Product::findOrFail($id);
-        return response()->json($product);
+        try {
+            $product = Product::findOrFail($id);
+            return response()->json([
+                'success' => true,
+                'product' => $product
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Produto não encontrado'
+            ], 404);
+        }
     }
 
     // Cria um novo produto
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'image_url' => 'nullable|string',
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'price' => 'required|numeric|min:0',
+                'image_url' => 'nullable|url',
+            ]);
 
-        $product = Product::create($validated);
-        return response()->json($product, 201);
+            $product = Product::create($validated);
+
+            return response()->json([
+                'success' => true,
+                'product' => $product,
+                'message' => 'Produto criado com sucesso'
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao criar produto',
+                'error' => $e->getMessage()
+            ], 400);
+        }
     }
 
     // Atualiza um produto existente
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
-        $product = Product::findOrFail($id);
+        try {
+            $product = Product::findOrFail($id);
 
-        $validated = $request->validate([
-            'name' => 'string',
-            'description' => 'nullable|string',
-            'price' => 'numeric',
-            'image_url' => 'nullable|string',
-        ]);
+            $validated = $request->validate([
+                'name' => 'string|max:255',
+                'description' => 'nullable|string',
+                'price' => 'numeric|min:0',
+                'image_url' => 'nullable|url',
+            ]);
 
-        $product->update($validated);
-        return response()->json($product);
+            $product->update($validated);
+            return response()->json([
+                'success' => true,
+                'product' => $product
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao atualizar produto',
+                'error' => $e->getMessage()
+            ], 400);
+        }
     }
 
     // Exclui um produto
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
-        return response()->json(['message' => 'Produto excluído']);
+        try {
+            $product = Product::findOrFail($id);
+            $product->delete();
+            return response()->json(['success' => true, 'message' => 'Produto excluído']);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao excluir produto',
+                'error' => $e->getMessage()
+            ], 400);
+        }
     }
 }

@@ -1,6 +1,6 @@
 "use client";
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface CartItem {
   id: number;
@@ -40,24 +40,15 @@ export default function Header() {
   }, []);
 
   return (
-    <header
-      className="w-full bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50"
-      style={{
-        backgroundColor: "#ffffff",
-        borderBottom: "1px solid #e5e7eb",
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-      }}
-    >
-      <div className="max-w-6xl mx-auto px-4 py-4">
+    <header className="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
+      <div className="max-w-6xl mx-auto container-padding py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div>
             <Link href="/">
-              <h1 className="text-2xl font-bold text-gray-900 hover:text-green-600 transition-colors duration-200">
+              <h2 className="text-dark hover:text-blood-red transition-colors duration-200 mb-0">
                 DeliveryApp
-              </h1>
+              </h2>
             </Link>
           </div>
 
@@ -65,14 +56,20 @@ export default function Header() {
           <div className="flex items-center gap-6">
             <Link
               href="/"
-              className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200"
+              className="text-gray hover:text-blood-red font-medium transition-colors duration-200"
             >
-              Cardápio
+              Início
+            </Link>
+            
+            <Link
+              href="/produtos"
+              className="text-gray hover:text-blood-red font-medium transition-colors duration-200"
+            >
+              Produtos
             </Link>
 
             <Link href="/cart">
-              <div className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg flex items-center gap-2 relative cursor-pointer">
-                {/* Ícone do carrinho */}
+              <div className="bg-blood-red hover:bg-red-800 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg flex items-center gap-2 relative cursor-pointer">
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -87,9 +84,8 @@ export default function Header() {
                   />
                 </svg>
                 Carrinho
-                {/* Badge do contador */}
                 {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold">
+                  <span className="absolute -top-2 -right-2 bg-white text-blood-red text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold">
                     {cartCount}
                   </span>
                 )}
