@@ -15,7 +15,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Pizza Margherita',
                 'description' => 'Pizza tradicional com molho de tomate, mussarela e manjericão fresco',
                 'price' => 32.90,
-                'image_url' => 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop&crop=center'
+                'image_url' => 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=300&fit=crop&crop=center'
             ],
             [
                 'name' => 'Pizza Pepperoni',
@@ -47,7 +47,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Hambúrguer Vegano',
                 'description' => 'Hambúrguer plant-based com queijo vegano e vegetais frescos',
                 'price' => 31.90,
-                'image_url' => 'https://images.unsplash.com/photo-1525059696034-4967a729002e?w=400&h=300&fit=crop&crop=center'
+                'image_url' => 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop&crop=center'
             ],
 
             // Comida Japonesa
@@ -75,19 +75,19 @@ class ProductSeeder extends Seeder
                 'name' => 'Lasanha Bolonhesa',
                 'description' => 'Lasanha tradicional com molho bolonhesa, queijo e molho bechamel',
                 'price' => 24.90,
-                'image_url' => 'https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=400&h=300&fit=crop&crop=center'
+                'image_url' => 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=400&h=300&fit=crop&crop=center'
             ],
             [
                 'name' => 'Espaguete Carbonara',
                 'description' => 'Espaguete cremoso com bacon, ovos e parmesão',
                 'price' => 29.90,
-                'image_url' => 'https://images.unsplash.com/photo-1621647428937-c12abd4d1322?w=400&h=300&fit=crop&crop=center'
+                'image_url' => 'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400&h=300&fit=crop&crop=center'
             ],
             [
                 'name' => 'Ravioli de Ricota',
                 'description' => 'Ravioli artesanal recheado com ricota e espinafre ao molho de tomate',
                 'price' => 27.90,
-                'image_url' => 'https://images.unsplash.com/photo-1587740908075-1060312d7d44?w=400&h=300&fit=crop&crop=center'
+                'image_url' => 'https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=400&h=300&fit=crop&crop=center'
             ],
 
             // Comida Mexicana
@@ -141,7 +141,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Wrap de Frango',
                 'description' => 'Wrap integral com frango grelhado, cream cheese e vegetais',
                 'price' => 21.90,
-                'image_url' => 'https://images.unsplash.com/photo-1565299585323-38174c259311?w=400&h=300&fit=crop&crop=center'
+                'image_url' => 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop&crop=center'
             ]
         ];
 
